@@ -2,8 +2,50 @@ import { useState } from "react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
+function Login({ onLogin }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-export default function App() {
+  const handleLogin = () => {
+    if (username === "admin" && password === "password") {
+      onLogin();
+    } else {
+      setError("Invalid username or password");
+    }
+  };
+
+  return (
+    <div className="p-10 flex justify-center items-center h-screen">
+      <Card className="max-w-sm w-full">
+        <CardContent>
+          <h2 className="text-xl font-bold mb-4">Login</h2>
+          {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+          <div className="mb-2">
+            <label className="block text-sm font-medium">Username:</label>
+            <Input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="mt-1 w-full"
+            />
+          </div>
+          <div className="mb-2">
+            <label className="block text-sm font-medium">Password:</label>
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="mt-1 w-full"
+            />
+          </div>
+          <Button onClick={handleLogin} className="mt-4 w-full">Login</Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+function MarksForm() {
   const [marks, setMarks] = useState(Array(5).fill(""));
   const [submittedMarks, setSubmittedMarks] = useState([]);
 
@@ -33,9 +75,7 @@ export default function App() {
               />
             </div>
           ))}
-          <Button onClick={handleSubmit} className="mt-4 w-full">
-            Submit Marks
-          </Button>
+          <Button onClick={handleSubmit} className="mt-4 w-full">Submit Marks</Button>
           {submittedMarks.length > 0 && (
             <div className="mt-6">
               <h3 className="text-lg font-semibold">Marks Table</h3>
@@ -61,4 +101,9 @@ export default function App() {
       </Card>
     </div>
   );
+}
+export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  return isAuthenticated ? <MarksForm /> : <Login onLogin={() => setIsAuthenticated(true)} />;
 }
