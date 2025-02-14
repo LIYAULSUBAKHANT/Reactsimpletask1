@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
+import './App.css';
+
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +18,7 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div className="p-10 flex justify-center items-center h-screen">
+    <div className="p-10 flex justify-center items-center h-screen" id="login">
       <Card className="max-w-sm w-full">
         <CardContent>
           <h2 className="text-xl font-bold mb-4">Login</h2>
@@ -31,7 +33,7 @@ function Login({ onLogin }) {
             />
           </div>
           <div className="mb-2">
-            <label className="block text-sm font-medium">Password:</label>
+            <label className="block text-sm font-medium">Password: </label>
             <Input
               type="password"
               value={password}
